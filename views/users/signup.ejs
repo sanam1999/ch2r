@@ -1,0 +1,63 @@
+<% layout("/layouts/boilerplates.ejs") %>
+    <div class="row mt-3">
+        <div class="col-6 offset-3">
+            <h1>SignUp</h1>
+            <form action="/signup" method="post" class="needs-validation " novalidate>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Full Name</label>
+                    <input type="text" required name="user[name]" class="form-control" id="exampleInputEmail1">
+
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Email</label>
+                    <input type="email" required name="user[username]" class="form-control" id="exampleInputEmail1"
+                        placeholder="@horizoncampusedu.lk">
+                    <div class="invalid-feedback"> Give a valid Email</div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" required name="user[password]" class="form-control" id="exampleInputEmail1"
+                        placeholder="*********">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Confrom Password</label>
+                    <input type="password" required name="user[c_password]" class="form-control" id="exampleInputEmail1"
+                        placeholder="********">
+                </div>
+                <button type="submit" class="btn btn-success mb-5">Submit</button>
+            </form>
+        </div>
+    </div>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fetch the form element
+            var form = document.querySelector('form.needs-validation');
+
+            // Prevent form submission if validations fail
+            form.addEventListener('submit', function (event) {
+                // Custom validation for password confirmation
+                var password = document.querySelector('input[name="user[password]"]').value;
+                var confirmPassword = document.querySelectorAll('input[name="user[password]"]')[1].value;
+
+                // If passwords do not match
+                if (password !== confirmPassword) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    alert('Passwords do not match');
+
+                }
+
+                // Check the form validity
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                // Add Bootstrap validation classes
+                form.classList.add('was-validated');
+            }, false);
+        });
+
+
+    </script>

@@ -1,0 +1,113 @@
+<% layout('layouts/boilerplates.ejs') %>
+
+    <style>
+        /* Basic Styling for Instagram-like layout */
+        .container {
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .post {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post img {
+            width: 100%;
+            height: auto;
+        }
+
+        .post-content {
+            padding: 15px;
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .post-description {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .post-location,
+        .post-date {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .post {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <div class="body">
+        <div class="container">
+            <a href="event/addevent"><button>Add New Post</button></a>
+            <br>
+            <hr>
+            <div class="grid">
+                <% if (events && events.length> 0) { %>
+                    
+                    <% events.forEach(event=> { %>
+                        <h1>
+                            <pre>
+                            <%= event %> </h1>
+                            </pre>
+                        <div class="post">
+                            <% if (event.image && event.image.length> 1) { %>
+                                <% event.image.forEach((img, index)=> { %>
+                                    <img src="https://cms.imgworlds.com/assets/a5366382-0c26-4726-9873-45d69d24f819.jpg?key=home-gallery" alt="Event Image <%= index + 1 %>">
+                                    <% }); %>
+                                        <% } else { %>
+                                            <img src="https://via.placeholder.com/600" alt="Placeholder Image">
+                                            <% } %>
+
+                                                <div class="post-content">
+                                                    <h2 class="post-title">
+                                                        <%= event.title %>
+                                                    </h2>
+                                                    <p class="post-description">
+                                                        <%= event.description %>
+                                                    </p>
+                                                    <% if (event.location) { %>
+                                                        <p class="post-location">Location: <%= event.location %>
+                                                        </p>
+                                                        <% } %>
+                                                            <% if (event.date) { %>
+                                                                <p class="post-date">Date: <%= event.date.toDateString()
+                                                                        %>
+                                                                </p>
+                                                                <% } %>
+                                                </div>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <p>No events found.</p>
+                                <% } %>
+            </div>
+        </div>
+    </div>

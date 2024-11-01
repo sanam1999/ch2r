@@ -21,19 +21,25 @@ module.exports.eventAdd = (req, res) => {
 
 
 module.exports.eventPost = async (req, res) => {
-   // try {
-       
-      
-        console.log(req)
+    try {
+        const filesArray = req.files.map(file => ({
+            url: file.path,
+            filename: file.filename,
+        }));
 
-        // await newEvent.save(); 
-        
-    //     return res.redirect('/event'); 
-    // } catch (err) {
-    //     console.error(err);
-       
-    //     return res.redirect('/event/addevent');
-    // }
+        const newEvent = new Event({
+            title: req.body.post.title,
+            description: req.body.post.description,
+            image: filesArray,
+            location: req.body.post.location,
+            date: req.body.post.date,
+        });
+
+        await newEvent.save();
+        res.status(201).json({ message: 'Event created successfully', event: newEvent });
+    } catch (error) {
+        res.status(400).json({ message: 'Error creating event', error: error.message });
+    }
 }
 
 

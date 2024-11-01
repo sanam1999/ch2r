@@ -5,12 +5,18 @@ const wrapAsync = require("../utils/warpAsync.js")
 const { isAuthenticated, isowner, listingvalidate } = require('../Middleware.js'); 
 const {eventAdd, eventGet,eventPost} = require("../Controller/event.js")
 const multer = require('multer')
-const { storage } = require('../cludynaryconfig.js');
-const upload = multer({ storage });
+const {storage} = require("../cludynaryconfig.js")
+const upload = multer({ storage});
+
 
 router.route('/')
     .get( wrapAsync(eventGet))
-    .post(eventPost)
+    .post( upload.array('post[image]', 5),eventPost)
+   
+   
+
+
+
     
 router.route('/addevent')
    .get(eventAdd)

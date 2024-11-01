@@ -9,8 +9,8 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ['user', 'boardMember', 'admin'],
-        default: 'user',
+        enum: ['boardMember', 'admin','verifiduser', 'Unverified'],
+        default:'Unverified'
     },
     userInfo: {
         type: Schema.Types.ObjectId,

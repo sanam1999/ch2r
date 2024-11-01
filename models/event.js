@@ -12,24 +12,17 @@ const eventSchema = new Schema({
     },
     image: [{
         url: String,
+        filename: String
     }],
     location: String,
-    reviews: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Review',
-    }],
-    likes: {
-        type: Number,
-        default: 0,
-    }, 
-    likedBy: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-    }],
     comments: [{
         type: Schema.Types.ObjectId,
         ref: 'Review',
     }],
-}, { timestamps: true });
+    date: {
+        type: Date
+        
+    }
+});
 
 module.exports = mongoose.model('Event', eventSchema);

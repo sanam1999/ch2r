@@ -72,7 +72,7 @@ width: 3rem;
             <th>Purpose</th>
         </tr>
         <tbody id="withdrawalTable">
-            <% details.filter(detail=> detail.type === "withdrawal").forEach((detail, index) => { %>
+            <% details.filter(detail=> detail.type === "withdrawal").forEach((detail, inde) => { %>
                 <tr>
                     <td>
                         <%= new Date(detail.date).getFullYear() %>

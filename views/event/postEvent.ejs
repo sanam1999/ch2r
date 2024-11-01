@@ -78,42 +78,56 @@
                 <textarea name="post[description]" rows="4" placeholder="Event Description" required></textarea>
                 <input type="text" name="post[location]" placeholder="Event Location" required>
                 <input type="date" name="post[date]" required>
-                <input type="file" name="post[image]" accept="image" multiple>
+            <input type="file" name="post[image]" accept="image/*" multiple>
+
                 <button type="submit" class="create-event">Create Event</button>
             </form>
             <div class="loader"></div>
         </div>
     </div>
-<!-- 
-    <script>
-        let eventForm = document.querySelector('.post-event');
-        let loadingSpinner = document.querySelector('.loader');
+<script>
+                            let loadingSpinner = document.querySelector('.loader');
 
-        eventForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Prevent default form submission
-            loadingSpinner.style.display = 'block'; // Show loading spinner
+                    document.querySelector('.post-event').addEventListener('submit', async (event) => {
+                        event.preventDefault(); // Prevent the default form submission
+                        loadingSpinner.style.display = 'block';
 
-            let formData = new FormData(eventForm);
-            let imageFiles = eventForm.querySelector('input[type="file"]').files;
+                    let fileInput = document.querySelector('input[name="post[image]"]');
+                    const files = fileInput.files; // Get the files from the input
 
-            for (let i = 0; i < imageFiles.length; i++) {
-                formData.append(`post[image][${i}]`, imageFiles[i]);
+                    // Check if the number of uploaded images exceeds the limit
+                    if (files.length > 5) {
+                        loadingSpinner.style.display = 'none'; // Hide spinner if the validation fails
+                        alert('You can upload a maximum of 5 images.');
+                        return; // Stop the submission
             }
 
-            fetch('/event', {
+                    const formData = new FormData(event.target); // Create FormData object from the form
+
+                    try {
+                        const response = await fetch('/event', {
                 method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                    loadingSpinner.style.display = 'none'; // Hide loading spinner
-                    // Handle successful response (e.g., redirect or display success message)
-                })
-                .catch((error) => {
+                        body: formData,
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        fileInput = ""
+                        alert(result.message);
+                    } else {
+                        alert(result.message);
+                    }
+                } catch (error) {
                     console.error('Error:', error);
-                    loadingSpinner.style.display = 'none'; // Hide loading spinner
-                    // Handle error (e.g., display error message)
+                        alert('An error occurred while creating the event.');
+                    } finally {
+                        loadingSpinner.style.display = 'none'; // Ensure the spinner is hidden in all cases
+                    }
                 });
-        });
-    </script> -->
+</script>
+
+
+
+
+</script>

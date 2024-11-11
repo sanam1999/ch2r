@@ -1,21 +1,110 @@
 <% layout("/layouts/boilerplates.ejs") %>
+<style>
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+    }
+</style>
+
     <div class="row mt-3">
         <div class="col-6 offset-3">
             <h1>Profile</h1>
-            <img class="profile" src="  <%= user.userInfo.img %>" alt="">
 
-        <p> <%= user.name %> <br>
-           
-            <%= user.username %></p>
-        <% if(user.userInfo){ %>
-            <%= user.userInfo.firstName +" "+ user.userInfo.firstName %> <br>
-            <%= user.userInfo.cybersecurityInterests %> <br>
-            <%= user.userInfo.faculty %><br>
-            <%= user.userInfo.phoneNumber %><br>
-            <%= user.userInfo.studentID %><br>
-            <%= user.userInfo.whatsappNumber %><br>
-            <%= user.userInfo.yearOfStudy %><br>
-           <%}%>
+            <div class="profile-container" onclick="document.getElementById('fileInput').click()">
+                <img class="profile" id="imagePreview" src="<%= user.userInfo.img.url %>" alt="Profile Image"
+                    style="width: 150px; height: 150px; border-radius: 50%;">
+                <div class="camera-icon-overlay">
+                    <i class="fa-solid fa-camera"></i>
+                </div>
+            </div>
+
+            <!-- Form for image upload, hidden submit button -->
+            <form class="profileImgupdate" id="profileForm" action="/profile/edit" method="post" enctype="multipart/form-data">
+                <input name="profileImg" type="file" class="fileInput" id="fileInput" onchange="previewAndSubmit(event)"
+                    style="display: none;">
+            </form>
+            
+            <p>
+                <%= user.name %> <br>
+                    <%= user.username %>
+            </p>
+            
+            <% if(user.userInfo) { %>
+                <%= user.userInfo.firstName + " " + user.userInfo.firstName %> <br>
+                    <%= user.userInfo.cybersecurityInterests %> <br>
+                        <%= user.userInfo.faculty %><br>
+                            <%= user.userInfo.phoneNumber %><br>
+                                <%= user.userInfo.studentID %><br>
+                                    <%= user.userInfo.whatsappNumber %><br>
+                                        <%= user.userInfo.yearOfStudy %><br>
+                                            <% } %>
+                                            
+                                                <a href="/profile/edit">edit</a>
+                                                <div class="loader"></div>
+                                                <div class="e_flassmsg" style="display: none; color: red;"></div>
+                                                <div class="s_flassmsg" style="display: none; color: green;"></div>
         </div>
-        <a href="/profile/edit">edit</a>
     </div>
+    
+    <script>
+        async function previewAndSubmit(event) {
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+            const preview = document.getElementById('imagePreview');
+            const loadingSpinner = document.querySelector('.loader');
+            const errorMsg = document.querySelector('.e_flassmsg');
+            const seggMsg = document.querySelector('.s_flassmsg');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+
+                const formData = new FormData();
+                formData.append('profileImg', file);
+
+                try {
+                    const response = await fetch(document.getElementById('profileForm').action, {
+                        method: 'put',
+                        body: formData
+                    });
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        showMessage(seggMsg, result.message);
+
+                    } else {
+                        showMessage(errorMsg, result.message);
+                    }
+                } catch (error) {
+                    showMessage(errorMsg, "An error occurred. Please try again.");
+                } finally {
+                    loadingSpinner.style.display = 'none';
+                }
+            }
+        }
+
+        function showMessage(element, message) {
+            element.innerText = message;
+            element.style.display = 'block';
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+
+
+      
+       
+
+    </script>

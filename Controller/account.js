@@ -1,5 +1,6 @@
 const Account = require('../models/account.js');
 const User = require('../models/user.js');
+
 const Userinfo = require('../models/userInfo.js')
 
 module.exports.transaction = async (req, res) => {
@@ -38,13 +39,44 @@ module.exports.accountGet = async (req, res) => {
 module.exports.promotionGet = async (req, res) => {
     try {
         const users = await User.find({});
-        return res.render("account/promotion.ejs", { users });
+       
+        return res.render("account/promotion.ejs", { users  });
     } catch (err) {
         console.error(err);
         req.flash("error", "Error fetching account");
         return res.redirect("/error");
     }
 };
+module.exports.promotioncommunityMemberGet = async (req, res) => {
+    try {
+         await Userinfo.findOneAndUpdate(
+            { _id: "6728841bb3fd88079262c69e" }, // Use an object as the filter
+            { team: "Top Board" }
+         );
+        console.log(Userinfo)
+       
+        let respost;
+        // Base query to find community members
+        const query = { role: "communityMember" };
+
+        // If 'type' query parameter is present, add conditions
+        if (req.query.type) {
+            // Assuming 'type' corresponds to a team name or role
+            query['teams.teamName'] = req.query.type; // Filter by team name
+        }
+
+        // Fetch users based on the constructed query and populate userInfo
+        respost = await User.find(query).populate('userInfo');
+
+        // Return the results
+        res.json(respost);
+        
+    } catch (err) {
+        console.error(err);
+        return res.json({ error: "user not found" });
+    }
+};
+
 
 module.exports.promotionPost = async (req, res) => {
     try {
@@ -64,7 +96,7 @@ users = await User.find({
     ]
 });
         }
-      return res.json(users)
+      return res.json(users )
     } catch (err) {
         console.error(err);
         req.flash("error", "Error fetching account");
@@ -96,7 +128,7 @@ module.exports.promotionPut = async (req, res) => {
             updatedUser = await Userinfo.findByIdAndDelete(deletedUser.userInfo);
             
         } else {
-            if (req.body.action=="boardMember") {
+            if (req.body.action=="communityMember") {
                
                 if(account.role != "Verified") {
                    return res.status(401).json({ message: 'First, verify user' });
@@ -115,6 +147,7 @@ module.exports.promotionPut = async (req, res) => {
         return res.redirect("/error");
     }
 };
+
 
 
 

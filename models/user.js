@@ -9,7 +9,7 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ['boardMember', 'admin','verifiduser', 'Unverified'],
+        enum: ['communityMember', 'admin','Verified', 'Unverified'],
         default:'Unverified'
     },
     userInfo: {

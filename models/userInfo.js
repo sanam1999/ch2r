@@ -40,17 +40,79 @@ const userInfoSchema = new Schema({
             'Other',
         ],
     },
+    socialMedia: {
+        linkedin: {
+            type: String,
+            default:"#"
+        },
+        facebook: {
+            type: String,
+            default:"#"
+        },
+        X: {
+            type: String,
+            default:"#"
+        }
+    },
     cybersecuritySkills: [String],
     certifications: {
         hasCertifications: Boolean,
         list: [String],
     },
+  
     img: {
-        type: String,
-        default: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+        url:{
+            type: String,
+            default: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+        },
+        filename: {
+             type: String,
+              default: "1",
+        },
     },
-    likedPosts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
-    dislikedPosts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+
+   teams: [{
+    teamName: {
+      type: String,
+      enum: [
+        "Top Board",
+        "Video Production Team",
+        "Social Media Handling Department",
+        "Content Section",
+        "Content Writers",
+        "Creative Graphic & Animation Team",
+        "Event Organizing Team",
+        "Cybersecurity Technical Team"
+      ],
+    },
+    roles: {
+      type: String, // Changed from array to string
+      enum: [
+        "President",
+        "Vice President",
+        "Secretary",
+        "Assistant Secretary",
+        "Treasurer",
+        "Assistant Treasurer",
+        "Presenter",
+        "Videographer",
+        "Video Editor",
+        "Script Writers",
+        "Director of Social Media Handling",
+        "Assistant Director of Social Media Handling",
+        "Editor",
+        "Assistant Editor",
+        "Head",
+        "Content Writer",
+        "Head of Creative Animation",
+        "Graphic Designer",
+        "Event Director",
+        "Assistant Event Director",
+        "Event Organizing Team Member",
+        "Cybersecurity Team Member"
+      ],
+    },
+  }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('UserInfo', userInfoSchema);

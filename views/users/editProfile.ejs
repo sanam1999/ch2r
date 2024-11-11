@@ -2,33 +2,31 @@
 
     <div class="row mt-3 offset-3 gap-2">
         <form action="/profile/edit" method="POST">
-            <img class="profile" src=" <%=  user.img %>" alt="">
-        
+            
+
             <label for="firstName">First Name:</label>
-            <input  type="text" id="firstName" name="firstName"
-                value="<%= user &&  user.firstName? user.firstName: '' %>">
+            <input type="text" id="firstName" name="firstName" value="<%= user && user.firstName ? user.firstName : '' %>">
             <br>
 
             <label for="lastName">Last Name:</label>
-            <input  type="text" id="lastName" name="lastName"
-                value="<%= user &&  user.lastName? user.lastName:  '' %>">
+            <input type="text" id="lastName" name="lastName" value="<%= user && user.lastName ? user.lastName : '' %>">
             <br>
 
             <label for="faculty">Faculty:</label>
             <select id="faculty" name="faculty">
                 <option value="">Select your faculty</option>
                 <option value="Faculty of Information Technology (IT)" <%=user &&
-                    user.faculty==='Faculty of Information Technology (IT)' ? 'selected' : '' %>>Faculty of
-                    Information Technology (IT)</option>
+                    user.faculty==='Faculty of Information Technology (IT)' ? 'selected' : '' %>>Faculty of Information
+                    Technology (IT)</option>
                 <option value="Faculty of Business and Management" <%=user &&
                     user.faculty==='Faculty of Business and Management' ? 'selected' : '' %>>Faculty of Business and
                     Management</option>
-                <option value="Faculty of Science" <%=user && user.faculty==='Faculty of Science' ? 'selected'
-                    : '' %>>Faculty of Science</option>
-                <option value="Faculty of Law" <%=user && user.faculty==='Faculty of Law' ? 'selected' : '' %>
-                    >Faculty of Law</option>
-                <option value="Faculty of Education" <%=user && user.faculty==='Faculty of Education'
-                    ? 'selected' : '' %>>Faculty of Education</option>
+                <option value="Faculty of Science" <%=user && user.faculty==='Faculty of Science' ? 'selected' : '' %>
+                    >Faculty of Science</option>
+                <option value="Faculty of Law" <%=user && user.faculty==='Faculty of Law' ? 'selected' : '' %>>Faculty
+                    of Law</option>
+                <option value="Faculty of Education" <%=user && user.faculty==='Faculty of Education' ? 'selected' : '' %>>Faculty of
+                    Education</option>
                 <option value="Other" <%=user && user.faculty==='Other' ? 'selected' : '' %>>Other</option>
             </select>
             <br>
@@ -36,45 +34,45 @@
             <label for="yearOfStudy">Year of Study:</label>
             <select id="yearOfStudy" name="yearOfStudy">
                 <option value="">Select your year of study</option>
-                <option value="First Year" <%=user && user.yearOfStudy==='First Year' ? 'selected' : '' %>>First
-                    Year</option>
-                <option value="Second Year" <%=user && user.yearOfStudy==='Second Year' ? 'selected' : '' %>
-                    >Second Year</option>
-                <option value="Third Year" <%=user && user.yearOfStudy==='Third Year' ? 'selected' : '' %>>Third
-                    Year</option>
-                <option value="Final Year" <%=user && user.yearOfStudy==='Final Year' ? 'selected' : '' %>>Final
-                    Year</option>
+                <option value="First Year" <%=user && user.yearOfStudy==='First Year' ? 'selected' : '' %>>First Year
+                </option>
+                <option value="Second Year" <%=user && user.yearOfStudy==='Second Year' ? 'selected' : '' %>>Second Year
+                </option>
+                <option value="Third Year" <%=user && user.yearOfStudy==='Third Year' ? 'selected' : '' %>>Third Year
+                </option>
+                <option value="Final Year" <%=user && user.yearOfStudy==='Final Year' ? 'selected' : '' %>>Final Year
+                </option>
             </select>
             <br>
 
             <label for="studentID">Student ID:</label>
-            <input  type="text" id="studentID" name="studentID"
+            <input type="text" id="studentID" name="studentID"
                 value="<%= user && user.studentID ? user.studentID : '' %>">
             <br>
 
             <label for="phoneNumber">Phone Number:</label>
-            <input  type="text" id="phoneNumber" name="phoneNumber"
+            <input type="text" id="phoneNumber" name="phoneNumber"
                 value="<%= user && user.phoneNumber ? user.phoneNumber : '' %>">
             <br>
 
             <label for="whatsappNumber">WhatsApp Number:</label>
-            <input  type="text" id="whatsappNumber" name="whatsappNumber"
+            <input type="text" id="whatsappNumber" name="whatsappNumber"
                 value="<%= user && user.whatsappNumber ? user.whatsappNumber : '' %>">
             <br>
 
             <label for="dateOfBirth">Date of Birth:</label>
-            <input  type="date" id="dateOfBirth" name="dateOfBirth"
+            <input type="date" id="dateOfBirth" name="dateOfBirth"
                 value="<%= user && user.dateOfBirth ? user.dateOfBirth.toISOString().split('T')[0] : '' %>">
             <br>
 
             <label for="street">Street:</label>
-            <input  type="text" id="street" name="street"
-                value="<%= user && user.street && user.street ? user.street : '' %>">
+            <input type="text" id="street" name="street"
+                value="<%= user && user.address && user.address.street ? user.address.street : '' %>">
             <br>
 
             <label for="city">City:</label>
-            <input  type="text" id="city" name="city"
-                value="<%= user && user.city && user.city ? user.city : '' %>">
+            <input type="text" id="city" name="city"
+                value="<%= user && user.address && user.address.city ? user.address.city : '' %>">
             <br>
 
             <label for="cybersecurityInterests">Cybersecurity Interests:</label>
@@ -86,17 +84,31 @@
                     user.cybersecurityInterests.includes('Ethical Hacking') ? 'selected' : '' %>>Ethical Hacking
                 </option>
                 <option value="Cloud Security" <%=user && user.cybersecurityInterests &&
-                    user.cybersecurityInterests.includes('Cloud Security') ? 'selected' : '' %>>Cloud Security
-                </option>
+                    user.cybersecurityInterests.includes('Cloud Security') ? 'selected' : '' %>>Cloud Security</option>
                 <option value="Forensics" <%=user && user.cybersecurityInterests &&
                     user.cybersecurityInterests.includes('Forensics') ? 'selected' : '' %>>Forensics</option>
                 <option value="Privacy and Data Protection" <%=user && user.cybersecurityInterests &&
-                    user.cybersecurityInterests.includes('Privacy and Data Protection') ? 'selected' : '' %>>Privacy
-                    and Data Protection</option>
+                    user.cybersecurityInterests.includes('Privacy and Data Protection') ? 'selected' : '' %>>Privacy and
+                    Data Protection</option>
                 <option value="Other" <%=user && user.cybersecurityInterests &&
                     user.cybersecurityInterests.includes('Other') ? 'selected' : '' %>>Other</option>
             </select>
             <br>
-            <input  type="submit" value="Submit"> <a href="/profile">Cancel</a>
+<label for="linkedin">LinkedIn:</label>
+<input type="text" id="linkedin" name="linkedin"
+    value="<%= user && user.socialMedia && user.socialMedia.linkedin ? user.socialMedia.linkedin : '' %>">
+<br>
+
+<label for="facebook">Facebook:</label>
+<input type="text" id="facebook" name="facebook"
+    value="<%= user && user.socialMedia && user.socialMedia.facebook ? user.socialMedia.facebook : '' %>">
+<br>
+
+<label for="X">X (formerly Twitter):</label>
+<input type="text" id="X" name="X"
+    value="<%= user && user.socialMedia && user.socialMedia.X ? user.socialMedia.X : '' %>">
+<br>
+
+<button type="submit">Update Profile</button>
         </form>
     </div>

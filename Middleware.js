@@ -1,19 +1,20 @@
 const Listing = require('./models/listing.js')
+const User = require('./models/user.js')
+const Token = require('./models/token.js')
 const ExpressError = require("./utils/ExpressError.js")
 const { ListingSchema, reviewShema } = require('./shema.js'); 
 const Revies = require('./models/review.js');
+const { AccountVerification } = require('./nodemiler.js');
 
 
 module.exports.isAuthenticated = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.url = req.originalUrl;
         req.flash("error", "You must be logged in to create a listing");
-        return res.redirect('/login'); // Ensure execution stops after redirect
+        return res.redirect('/login'); 
     } 
-    next(); // Proceed if authenticated
+    next(); 
 };
-
-
 module.exports.saveURL = (req, res, next) => {
     if (req.session.url) {
         res.locals.url = req.session.url;
@@ -29,7 +30,6 @@ module.exports.isowner = async (req, res, next) => {
     }
     next();
 }
-
 module.exports.listingvalidate = (req, res, next) => {
     const { error } = ListingSchema.validate(req.body);
     if (error) {
@@ -47,7 +47,6 @@ module.exports.validatereview = (req, res, next) => {
     } 
     next();
 };
-
 module.exports.isOeviewOwner = async (req, res, next) => {
      const { rid ,id} = req.params;
     let revies = await Revies.findById(rid);
@@ -57,7 +56,6 @@ module.exports.isOeviewOwner = async (req, res, next) => {
     }
     next();
 }
-
 module.exports.isboarMember = async (req, res, next) => {
     const { role } = req.user;
     if (role !== "boarMember" && role !== "admin") {
@@ -74,4 +72,26 @@ module.exports.verified = async (req, res, next) => {
     }
     next();
 }
-
+module.exports.isActivate = async (req, res, next) => {
+    try {
+    
+        const user = await User.findByUsername(req.body.username);
+        const token = await Token.findOne({ Email: req.body.username });
+        if (!user.accStatus) {
+            if (token) {
+                req.flash("error", "You are not verified. Please check your email.");
+            } else {
+                 let token = new Token({  
+                     Email: req.body.username,
+               });
+                    token = await token.save();
+                    AccountVerification(token._id, user._id, user.username, user.name);
+                    req.flash("error", "Your token has expired. We sent a new token. Please check your email.");
+            }
+            return res.redirect('/login');
+        }
+        next();
+    } catch (error) {
+         next();
+    }
+};

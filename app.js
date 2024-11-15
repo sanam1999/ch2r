@@ -1,8 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const multer = require('multer');
-
 const mongoose = require('mongoose');
 const mongoURI =  "mongodb://localhost:27017/C2sh";
 const path = require("path");
@@ -76,6 +74,11 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(("/und"),(req, res) => {
+    res.render("und.ejs");
+  
+});
+
 // Routes
 app.use('/', userRouter);
 app.use('/listings', listingRouter);
@@ -91,7 +94,7 @@ app.all("*", (req, res, next) => {
 
 app.use((err, req, res, next) => {
     const { statusCode = 500, message = "Something went wrong" } = err;
-    res.status(statusCode).render("listing/error", { error: { statusCode, message } });
+    res.status(statusCode).render("home/error", { error: { statusCode, message } });
 });
 
 // Listen

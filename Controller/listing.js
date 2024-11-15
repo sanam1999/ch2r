@@ -4,10 +4,10 @@ const Listing = require("../models/listing.js");
 module.exports.index = async (req, res) => {
    
     const lists = await Listing.find({});
-    res.render("listing/home.ejs", { lists });
+    res.render("home/home.ejs", { lists });
 }
 module.exports.create =(req, res) => {
-    res.render("listing/new.ejs");
+    res.render("home/new.ejs");
 }
 
 module.exports.createPost = async (req, res) => {
@@ -37,7 +37,7 @@ module.exports.showPost =async (req, res) => {
         return res.redirect('/listings');
     }
     
-    res.render("listing/show.ejs", { list });
+    res.render("home/show.ejs", { list });
 }
 
 module.exports.editPost = async (req, res) => {
@@ -47,7 +47,7 @@ module.exports.editPost = async (req, res) => {
         req.flash("error", "This post is not available");
         return res.redirect('/listings');
     }
-    res.render("listing/edit.ejs", { list });
+    res.render("home/edit.ejs", { list });
 }
 
 module.exports.postUpdate = async (req, res) => {

@@ -1,10 +1,11 @@
 const express = require('express');
+const router = express.Router({mergeParams: true});
 const warpAsync = require('../utils/warpAsync');
 const passport = require('passport'); 
-const {saveURL, isAuthenticated} = require('../Middleware')
-const router = express.Router();
-const {signupGet,signupPost,loginPost,loginGet,logout, profileGet, profilePost,editProfile} = require('../Controller/usre')
+const {saveURL, isAuthenticated, isActivate} = require('../Middleware')
 
+const { signupGet, signupPost, loginPost, loginGet, logout, profileGet,profilePost, editProfile, profileIMGupdate, loginacc, Subscribe, verifid } = require('../Controller/usre')
+const { upload } = require("../cludynaryconfig.js");
 
 // Signup route
 router.route('/signup')
@@ -16,12 +17,14 @@ router.route('/profile')
 
 router.route('/profile/edit')
     .get(isAuthenticated, editProfile)
-    .post(isAuthenticated, profilePost);
+    .post(isAuthenticated, profilePost)
+    .put(upload.single('profileImg'), profileIMGupdate)
+    
 
-// Login route
 router.route('/login')
     .post(
-    saveURL,
+        saveURL,
+        isActivate,
     passport.authenticate(
     "local", { 
     failureRedirect: '/login', 
@@ -33,5 +36,17 @@ router.route('/login')
 
 // Login route
 router.get("/logout", logout)
+
+     
+router.route('/getUserinfo')
+    .get(loginacc);
+
+router.route('/Subscribe')
+    .post(Subscribe);
+
+router.route('/verifid')
+    .get(verifid)
+
+
 
 module.exports = router;

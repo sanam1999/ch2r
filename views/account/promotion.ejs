@@ -250,7 +250,7 @@
                                         <option value="all">All</option>
                                         <option value="Unverified">Unverified</option>
                                         <option value="Verified">Verified</option>
-                                        <option value="boardMember">Board Member</option>
+                                        <option value="communityMember">Community Member</option>
                                     </select>
                                     <input type="text" placeholder="Name or email" name="ser" id="ser">
                                 </form>
@@ -289,7 +289,7 @@
                                 </option>
                                 <option value="Unverified" <%=user.role==='Unverified' ? 'selected' : '' %>>Unverified
                                 </option>
-                                <option value="boardMember" <%=user.role==='promotetoboardmember' ? 'selected' : '' %>
+                                <option value="communityMember" <%=user.role==='communityMember' ? 'selected' : '' %>
                                     >Promote to Board
                                     Member</option>
                                 <option value="demotedboardmember" <%=user.role==='demotedboardmember' ? 'selected' : ''
@@ -312,10 +312,13 @@
 
     </section>
 
+
+
     <script>
+                                                                                                                                    const errorMsg = document.querySelector('.e_flassmsg');
+                                                                                                                                    const seggMsg = document.querySelector('.s_flassmsg');
         document.getElementById("userStatus").addEventListener("change", async (event) => {
             const role = event.target.value;
-
             await getdata("role", role);
         });
 
@@ -362,7 +365,7 @@
                              <select name="action" class="userStatus">
             <option value="Verified" ${user.role === 'Verified' ? 'selected' : ''}>Verified</option>
             <option value="Unverified" ${user.role === 'Unverified' ? 'selected' : ''}>Unverified</option>
-            <option value="BoardMember" ${user.role === 'promotetoboardmember' ? 'selected' : ''}>Promote to Board Member</option>
+            <option value="communityMember" ${user.role === 'promotetoboardmember' ? 'selected' : ''}>Promote to Board Member</option>
             <option value="Verified" ${user.role === 'demotedboardmember' ? 'selected' : ''}>Demote Board Member</option>
             <option value="deletedaccount" ${user.role === 'deletedaccount' ? 'selected' : ''}>Delete Account</option>
         </select>
@@ -377,24 +380,24 @@
             }
         }
 
+
         function attachUserStatusListeners() {
             const userStatusElements = document.querySelectorAll(".userStatus");
 
             userStatusElements.forEach(select => {
                 select.addEventListener("change", async (e) => {
-                    let selectedValue = e.target.value;
+                    const selectedValue = e.target.value;
                     const userId = e.target.closest('tr').getAttribute('data-id');
+
                     if (selectedValue === "deletedaccount") {
                         const userConfirmed = confirm("Are you sure you want to delete your account? This action cannot be undone.");
-
-
                         if (!userConfirmed) {
                             e.target.value = '';
                             return;
                         }
                         e.target.closest('tr').remove();
-
                     }
+
                     try {
                         const response = await fetch('/account/promotion', {
                             method: 'PUT',
@@ -402,31 +405,51 @@
                             body: JSON.stringify({ action: selectedValue, userId: userId })
                         });
 
-                        if (!response.ok) {
-                            const errorData = await response.json(); // Get the error message from the response
-                            if (response.status === 401) {
-                                alert(errorData.message); // Show the error message
-                            } else {
-                                throw new Error(`Network response was not ok: ${response.statusText}`);
-                            }
-                            return; // Ensure to return after handling the error
-                        }
-
                         const result = await response.json();
-                        if (selectedValue != "deletedaccount") {
-                            e.target.parentElement.parentElement.querySelector(".role").innerText = result.role;
-                        }
 
+                        if (response.ok) {
+                            showMessage(seggMsg, result.message);
+                            if (selectedValue !== "deletedaccount") {
+                                e.target.closest('tr').querySelector(".role").innerText = result.role;
+                            }
+                        } else {
+                            const errorMessage = response.status === 401 ? result.message : response.statusText;
+                            showMessage(errorMsg, errorMessage);
+                        }
 
                     } catch (error) {
-
+                        showMessage(errorMsg, "An error occurred while updating user status.");
                     }
                 });
             });
         }
 
-        attachUserStatusListeners();
+                                        attachUserStatusListeners();
 
+            async function petPromotion(type) {
+                const url = type ? `/account/communityMember/${type}` : "/account/communityMember";
 
+                        try {
+                            const response = await fetch(url, {
+                                method: "GET",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                            });
+                            return await response.json();;
 
+                        } catch (error) {
+                            console.error("Fetch error:", error);
+                        }
+                    }
+
+              
+
+                                    function showMessage(element, message) {
+                                        element.innerText = message;
+                                        element.style.display = 'block';
+                                        setTimeout(() => {
+                                            element.style.display = 'none';
+                                        }, 5000);
+                                    }
     </script>

@@ -16,6 +16,10 @@ const userInfoSchema = new Schema({
             'Other',
         ],
     },
+    gender:{
+        type: String,
+        enum: ['Male', 'Female', 'Other'],
+    },
     yearOfStudy: {
         type: String,
         enum: ['First Year', 'Second Year', 'Third Year', 'Final Year'],

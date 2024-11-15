@@ -81,9 +81,9 @@ module.exports.profilePost = async (req, res, next) => {
                 city: req.body.city,
             },
             socialMedia: {
-                linkedin: req.body.linkedin || "#",
-                facebook: req.body.facebook || "#",
-                X: req.body.X || "#",
+                linkedin: req.body.linkedin || "",
+                facebook: req.body.facebook || "",
+                X: req.body.X || "",
             }
         });
 

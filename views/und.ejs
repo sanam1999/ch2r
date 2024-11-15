@@ -1,41 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout('layouts/boilerplates.ejs') %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Under Construction</title>
+
     <style>
-        /* Reset some default styling */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
+        #body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #373636;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 80vh;
             overflow: hidden;
             color: #333;
         }
 
-        .container {
+        #container {
             text-align: center;
             padding: 20px;
-            background-color: #fff;
+            background-color: #000000;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(182, 216, 214, 0.1);
             animation: fadeIn 1s ease-out;
         }
 
         img {
             width: 20rem;
+            border-radius: 10px;
             margin-bottom: 20px;
+
         }
 
         h1 {
@@ -46,14 +37,14 @@
 
         p {
             font-size: 1.2rem;
-            color: #666;
+            color: #ffffff;
         }
 
-        .back-button {
+        #back-button {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 1rem;
-            background-color: #007bff;
+            background-color: #343434;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -62,8 +53,8 @@
             transition: background-color 0.3s ease;
         }
 
-        .back-button:hover {
-            background-color: #0056b3;
+        #back-button:hover {
+            background-color: #005296;
         }
 
         /* Animation for fade-in effect */
@@ -88,22 +79,30 @@
             }
 
             img {
-                width: 120px;
+                width: 270px;
+                border-radius: 10px;
+
+            }
+
+            #container {
+
+                padding: 20px;
+                background-color: #373636;
+
             }
         }
     </style>
-</head>
 
-<body>
 
-    <div class="container">
-        <!-- Image placed here -->
-        <img src="https://c8.alamy.com/comp/2B77KHJ/3d-under-construction-concept-2B77KHJ.jpg" alt="Under Construction Image">
-        <h1>Under Construction</h1>
-        <p>This page is currently under construction. Please check back later.</p>
-        <button class="back-button" onclick="history.back()">Go Back</button>
+    <div id="body">
+
+        <div id="container">
+            <!-- Image placed here -->
+            <img src="https://c8.alamy.com/comp/2B77KHJ/3d-under-construction-concept-2B77KHJ.jpg"
+                alt="Under Construction Image">
+            <h1>Under Construction</h1>
+            <p>This page is currently under construction. Please check back later.</p>
+            <button id="back-button" onclick="history.back()">Go Back</button>
+        </div>
+
     </div>
-
-</body>
-
-</html>

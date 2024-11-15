@@ -1,8 +1,6 @@
 const Account = require('../models/account.js');
 const User = require('../models/user.js');
-
 const Userinfo = require('../models/userInfo.js')
-
 module.exports.transaction = async (req, res) => {
     const transactionType = req.body.type === "deposit" ? "deposit" : "withdrawal";
     try {
@@ -35,7 +33,6 @@ module.exports.accountGet = async (req, res) => {
         return res.redirect('/error');
     }
 }
-
 module.exports.promotionGet = async (req, res) => {
     try {
         const users = await User.find({});
@@ -52,9 +49,7 @@ module.exports.promotioncommunityMemberGet = async (req, res) => {
          await Userinfo.findOneAndUpdate(
             { _id: "6728841bb3fd88079262c69e" }, // Use an object as the filter
             { team: "Top Board" }
-         );
-        console.log(Userinfo)
-       
+         );       
         let respost;
         // Base query to find community members
         const query = { role: "communityMember" };
@@ -76,8 +71,6 @@ module.exports.promotioncommunityMemberGet = async (req, res) => {
         return res.json({ error: "user not found" });
     }
 };
-
-
 module.exports.promotionPost = async (req, res) => {
     try {
         let users;

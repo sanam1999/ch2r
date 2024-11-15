@@ -1,8 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-
-
 const mongoose = require('mongoose');
 const mongoURI =  "mongodb://localhost:27017/C2sh";
 const path = require("path");
@@ -76,6 +74,10 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(("/und"),(req, res) => {
+    res.render("und.ejs");
+  
+});
 
 // Routes
 app.use('/', userRouter);

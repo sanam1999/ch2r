@@ -1,3 +1,4 @@
+const { boolean } = require('joi');
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 const Schema = mongoose.Schema;
@@ -15,6 +16,10 @@ const userSchema = new Schema({
     userInfo: {
         type: Schema.Types.ObjectId,
         ref: 'UserInfo',
+    },
+    accStatus: {
+        type: Boolean,
+        default:false
     }
 }, { timestamps: true });
 

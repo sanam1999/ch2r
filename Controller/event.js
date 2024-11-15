@@ -39,7 +39,7 @@ module.exports.eventPost = async (req, res) => {
 module.exports.deletePost = async (req, res) => {
     try {
         const id = req.body.id;
-        console.log(id)
+
         let post = await Event.findByIdAndDelete(id);
         await post.image.map(imageToDelete => (
             deleteImage(imageToDelete)

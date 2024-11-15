@@ -28,7 +28,7 @@ async function deleteImage(imageToDelete) {
             res.status(400).json({ message: 'Failed to delete image:', error: error.message });
         }
     } else {
-        console.log('No image to delete.');
+        res.status(400).json({ message: 'No image to delete. '});
     }
 };
 

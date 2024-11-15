@@ -182,7 +182,7 @@
                             loadingSpinner.style.display = 'block';
 
                             const imgId = form.action.split('/').pop();
-                            console.log(imgId);
+
 
                             try {
                                 const response = await fetch(`/event/edit?id=${imgId}`, {

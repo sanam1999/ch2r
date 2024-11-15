@@ -11,9 +11,8 @@ const transporter = nodemailer.createTransport({
 });
 
 module.exports.AccountVerification = async (token, userid, email, name) => {
-  // async function AccountVerification(token, userid, email, name) {
-    
-  console.log(token, userid, email, name)
+
+
   try {
     const info = await transporter.sendMail({
       to: `${email}`,
@@ -57,5 +56,3 @@ module.exports.AccountVerification = async (token, userid, email, name) => {
 }
 
 // AccountVerification("dfsafasdf", "dfasfdsaf", "shresthasanam288@gmail.com", "name").catch(console.error);
-
-

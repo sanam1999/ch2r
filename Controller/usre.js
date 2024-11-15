@@ -161,7 +161,6 @@ module.exports.verifid = async (req, res) => {
          return   res.redirect('/login');
             
 }
-
         let Tken = await Token.findById(token);
         console.log(Tken)
         if (Tken && Tken.Email === email) {

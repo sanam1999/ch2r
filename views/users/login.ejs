@@ -111,7 +111,7 @@
 <script>
     // Get the current page path
     const currentPath = window.location.pathname;
-    console.log(currentPath)
+    
     const pathname = {
         '/profile/edit': 'editprofile',
         '/listings': 'Home',
@@ -136,7 +136,7 @@
     } else {
         navItem = document.querySelector(`.nav-item a[href="${currentPath}"]`).parentElement.parentElement.parentElement.parentElement
     }
-    console.log(navItem + "dsfdsafsd")
+
     if (navItem) {
         navItem.classList.add('active');
     }

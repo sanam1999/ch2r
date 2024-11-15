@@ -15,8 +15,6 @@ module.exports.isAuthenticated = (req, res, next) => {
     } 
     next(); 
 };
-
-
 module.exports.saveURL = (req, res, next) => {
     if (req.session.url) {
         res.locals.url = req.session.url;
@@ -32,7 +30,6 @@ module.exports.isowner = async (req, res, next) => {
     }
     next();
 }
-
 module.exports.listingvalidate = (req, res, next) => {
     const { error } = ListingSchema.validate(req.body);
     if (error) {
@@ -50,7 +47,6 @@ module.exports.validatereview = (req, res, next) => {
     } 
     next();
 };
-
 module.exports.isOeviewOwner = async (req, res, next) => {
      const { rid ,id} = req.params;
     let revies = await Revies.findById(rid);
@@ -60,7 +56,6 @@ module.exports.isOeviewOwner = async (req, res, next) => {
     }
     next();
 }
-
 module.exports.isboarMember = async (req, res, next) => {
     const { role } = req.user;
     if (role !== "boarMember" && role !== "admin") {

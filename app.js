@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const mongoURI =  "mongodb://localhost:27017/C2sh";
+
 const path = require("path");
 const methodOverride = require('method-override');
 const ejsMate = require("ejs-mate");
@@ -20,10 +20,13 @@ const passport = require('passport');
 const LocalStrategy = require("passport-local");
 const User = require('./models/user.js');
 
-const secreT =  'defaultSecret';
+
+
+
+
 
 // Database connection
-mongoose.connect(mongoURI)
+mongoose.connect(process.env.mongoURI)
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.error('Error connecting to MongoDB:', err));
 
@@ -39,14 +42,14 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
 
 const Store = MongoStore.create({
-    mongoUrl: mongoURI,
-    crypto: { secret: secreT },
+    mongoUrl: process.env.mongoURI,
+    crypto: { secret:  process.env.secreT },
     touchAfter: 24 * 60 * 60,
 });
 
 const sessionOptions = {
     store: Store,
-    secret: secreT,
+    secret: process.env.secreT ,
     resave: false,
     saveUninitialized: true,
     cookie: {

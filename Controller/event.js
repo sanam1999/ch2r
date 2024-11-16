@@ -1,5 +1,5 @@
 const Event = require('../models/event.js');
-const { deleteImage } = require("../cludynaryconfig.js");
+const { deleteImage } = require("../ThirdParty/cludynaryconfig.js");
 
 module.exports.eventGet = async (req, res) => {
     try {

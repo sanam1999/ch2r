@@ -1,10 +1,10 @@
-const Listing = require('./models/listing.js')
-const User = require('./models/user.js')
-const Token = require('./models/token.js')
-const ExpressError = require("./utils/ExpressError.js")
+const Listing = require('../models/listing.js')
+const User = require('../models/user.js')
+const Token = require('../models/token.js')
+const ExpressError = require("./ExpressError.js")
 const { ListingSchema, reviewShema } = require('./shema.js'); 
-const Revies = require('./models/review.js');
-const { AccountVerification } = require('./nodemiler.js');
+const Revies = require('../models/review.js');
+const { AccountVerification } = require('../ThirdParty/nodemiler.js');
 
 
 module.exports.isAuthenticated = (req, res, next) => {

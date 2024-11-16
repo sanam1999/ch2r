@@ -5,12 +5,15 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false, // true for port 465, false for other ports
   auth: {
-    user: "billuvaai@gmail.com",
-    pass: "xxhh nmbi tulb oezz",
+    user:  process.env.nodemilerPsaa ,
+    pass: process.env.nodemilerUser ,
   },
 });
 
-module.exports.AccountVerification = async (token, userid, email, name) => {
+
+
+ module.exports.AccountVerification = async (token, userid, email, name) => {
+ 
 
 
   try {
@@ -55,4 +58,4 @@ module.exports.AccountVerification = async (token, userid, email, name) => {
   }
 }
 
-// AccountVerification("dfsafasdf", "dfasfdsaf", "shresthasanam288@gmail.com", "name").catch(console.error);
+// AccountVerification("dfsafasdf", "dfasfdsaf", "itbin-22110127@horizoncampus.edu.lk", "name").catch(console.error);

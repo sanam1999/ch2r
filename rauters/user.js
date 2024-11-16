@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router({mergeParams: true});
 const warpAsync = require('../utils/warpAsync');
 const passport = require('passport'); 
-const {saveURL, isAuthenticated, isActivate} = require('../Middleware')
+const {saveURL, isAuthenticated, isActivate} = require('../utils/Middleware.js')
 
 const { signupGet, signupPost, loginPost, loginGet, logout, profileGet,profilePost, editProfile, profileIMGupdate, loginacc, Subscribe, verifid } = require('../Controller/usre')
-const { upload } = require("../cludynaryconfig.js");
+const { upload } = require("../ThirdParty/cludynaryconfig.js");
 
 // Signup route
 router.route('/signup')

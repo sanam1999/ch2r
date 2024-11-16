@@ -1,8 +1,8 @@
 const User = require("../models/user");
 const UserInfo = require("../models/userInfo");
 const { subscribeUser } = require("../models/Subscribe");
-const { deleteImage } = require("../cludynaryconfig.js");
-const { AccountVerification } = require('../nodemiler.js');
+const { deleteImage } = require("../ThirdParty/cludynaryconfig.js");
+const { AccountVerification } = require('../ThirdParty/nodemiler.js');
 const Token = require('../models/token')
 
 

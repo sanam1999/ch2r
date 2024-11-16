@@ -2,10 +2,10 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
 const wrapAsync = require("../utils/warpAsync.js")
-const { isAuthenticated, isowner, listingvalidate } = require('../Middleware.js'); 
+const { isAuthenticated, isowner, listingvalidate } = require('../utils/Middleware.js'); 
 const {eventAdd, eventGet,eventPost,postEdit,deleteIMG,deletePost,postUpdate} = require("../Controller/event.js")
 const warpAsync = require('../utils/warpAsync.js');
-const { upload } = require("../cludynaryconfig.js");
+const { upload } = require("../ThirdParty/cludynaryconfig.js");
 
 
 router.route('/')

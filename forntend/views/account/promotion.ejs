@@ -1,0 +1,727 @@
+<% layout('layouts/boilerplates.ejs') %>
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 40rem;
+            margin-top: 20px;
+            /* Added margin for better spacing */
+        }
+
+        th {
+            background-color: #4CAF50;
+            /* Header background color */
+            color: white;
+            /* Header text color */
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+            /* Light gray for even rows */
+        }
+
+        #noOfValueWithdrawal,
+        #noOfValueDeposit {
+            width: 3rem;
+        }
+
+        .id {
+            display: none;
+        }
+
+        h1,
+        h3 {
+            margin: 10px 0;
+            /* Added margin for headings */
+        }
+
+        select,
+        input[type="text"] {
+            margin: 10px 0;
+            /* Margin for form elements */
+            padding: 8px;
+            /* Padding for comfort */
+            border-radius: 4px;
+            /* Rounded corners */
+            border: 1px solid #ccc;
+            /* Border for inputs */
+            width: 100%;
+            /* Full width for better layout */
+            box-sizing: border-box;
+            /* Include padding and border in width */
+        }
+
+        select:focus,
+        input[type="text"]:focus {
+            outline: none;
+            /* Remove default focus outline */
+            border-color: #4CAF50;
+            /* Change border color on focus */
+        }
+
+        option {
+            padding: 8px;
+            /* Padding for options */
+        }
+
+        /* Additional styles for the alert confirmation */
+        .alert {
+            color: red;
+            /* Red color for alerts */
+            font-weight: bold;
+            /* Bold for emphasis */
+        }
+    </style>
+    <style>
+        section {
+            background-color: #ffffff;
+            /* White background for sections */
+            border-radius: 8px;
+            /* Rounded corners for sections */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+            padding: 20px;
+            /* Padding inside sections */
+            margin-bottom: 20px;
+            /* Space between sections */
+        }
+
+        h1,
+        h3 {
+            margin: 10px 0;
+            color: #4CAF50;
+            /* Header text color */
+            text-align: center;
+            /* Centered header text */
+        }
+
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            /* Full width for responsive design */
+            margin-top: 20px;
+            /* Space above the table */
+        }
+
+        th {
+            background-color: #4CAF50;
+            /* Header background color */
+            color: white;
+            /* Header text color */
+            padding: 12px;
+            /* Added padding for header cells */
+            text-transform: uppercase;
+            /* Uppercase for header text */
+            letter-spacing: 1px;
+            /* Spacing between letters */
+            transition: background-color 0.3s;
+            /* Smooth transition for hover effect */
+        }
+
+        th:hover {
+            background-color: #45a049;
+            /* Darker shade on hover */
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+            /* Increased padding for table cells */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+            /* Light gray for even rows */
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+            /* Highlight row on hover */
+            transition: background-color 0.3s;
+            /* Smooth transition for hover */
+        }
+
+        #noOfValueWithdrawal,
+        #noOfValueDeposit {
+            width: 3rem;
+        }
+
+        .id {
+            display: none;
+        }
+
+        select,
+        input[type="text"] {
+            margin: 10px 0;
+            /* Margin for form elements */
+            padding: 10px;
+            /* Padding for comfort */
+            border-radius: 4px;
+            /* Rounded corners */
+            border: 1px solid #ccc;
+            /* Border for inputs */
+            width: 100%;
+            /* Full width for better layout */
+            box-sizing: border-box;
+            /* Include padding and border in width */
+            transition: border-color 0.3s;
+            /* Smooth transition for border color */
+        }
+
+        select:focus,
+        input[type="text"]:focus {
+            outline: none;
+            /* Remove default focus outline */
+            border-color: #4CAF50;
+            /* Change border color on focus */
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+            /* Subtle shadow on focus */
+        }
+
+        option {
+            padding: 8px;
+            /* Padding for options */
+        }
+
+        .alert {
+            color: red;
+            /* Red color for alerts */
+            font-weight: bold;
+            /* Bold for emphasis */
+            text-align: center;
+            /* Center the alert text */
+        }
+
+        .dropdown-container {
+            display: flex;
+            /* Enables flexbox layout */
+            justify-content: flex-start;
+            /* Aligns items to the start */
+            gap: 10px;
+            /* Adds space between dropdowns */
+            margin: 10px 0;
+            /* Optional margin for spacing */
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+                /* Smaller font size on mobile */
+            }
+
+            h1,
+            h3 {
+                font-size: 1.5em;
+                /* Responsive font size for headings */
+            }
+
+            section {
+                padding: 15px;
+                /* Reduced padding for smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            h1,
+            h3 {
+                font-size: 1.2em;
+                /* Further reduced font size for very small screens */
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr.hidden {
+            display: none;
+        }
+
+        input {
+            margin-bottom: 20px;
+            padding: 8px;
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
+
+
+    <section>
+        <h1>Total User <%= users.length %>
+        </h1>
+        <% let a=0; %>
+            <% users.forEach(user=> { %>
+                <% if (user.role !=='Unverified' ) { %>
+                    <% a +=1; %>
+                        <% } %>
+                            <% }); %>
+                                <h1>Total Verified Users: <%= a %>
+                                </h1>
+
+
+                                <form action="/account/promotion" method="post" id="promotionForm">
+                                    <select name="role" id="userStatus">
+                                        <option value="all">All</option>
+                                        <option value="Unverified">Unverified</option>
+                                        <option value="Verified">Verified</option>
+                                        <option value="communityMember">Community Member</option>
+                                    </select>
+                                    <input type="text" placeholder="Name or email" name="ser" id="ser">
+                                </form>
+    </section>
+
+    <section>
+        <h1>Promotion</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Purpose</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="withdrawalTable">
+                <% users.forEach(user=> { %>
+                    <tr data-id="<%= user._id %>">
+                        <td>
+                            <p class="id">
+                                <%= user._id %>
+                            </p>
+                            <%= user.name %>
+                        </td>
+                        <td class="role">
+                            <%= user.role %>
+                        </td>
+                        <td>
+                            <%= user.username %>
+                        </td>
+
+                        <td>
+                            <select name="action" class="userStatus">
+                                <option value="Verified" <%=user.role==='Verified' ? 'selected' : '' %>>Verified
+                                </option>
+                                <option value="Unverified" <%=user.role==='Unverified' ? 'selected' : '' %>>Unverified
+                                </option>
+                                <option value="communityMember" <%=user.role==='communityMember' ? 'selected' : '' %>
+                                    >Promote to Board
+                                    Member</option>
+                                <option value="demotedboardmember" <%=user.role==='demotedboardmember' ? 'selected' : ''
+                                    %>>Demote
+                                    Board Member
+                                </option>
+                                <option value="deletedaccount" <%=user.role==='deletedaccount' ? 'selected' : '' %>
+                                    >
+                                    Delete Account
+                                </option>
+
+                            </select>
+
+
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+
+    </section>
+
+
+    <h1>Promotion Community Member</h1>
+    <input type="text" id="searchInput2" placeholder="Search by Name, Position, Email, etc." onkeyup="searchTable()">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Email</th>
+
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="withdrawalTable2">
+            <% users.forEach(user=> { %>
+                <tr data-id="<%= user._id %>">
+                    <td>
+                        <p class="id">
+                            <%= user.userInfo._id %>
+                        </p>
+                        <%= user.name %>
+                    </td>
+                    <td class="role">
+                        <% if (user.userInfo && user.userInfo.teams && user.userInfo.teams.length> 0) { %>
+                            <% user.userInfo.teams.forEach(team=> { %>
+                                <span style="display: flex;">
+                                    <p class="tm">
+                                        <%= team.teamName %>
+                                    </p> -> <p>
+                                        <%= team.roles %>
+                                    </p>
+                                </span><br>
+                                <% }); %>
+                                    <% } else { %>
+                                        No teams available
+                                        <% } %>
+                    </td>
+                    <td>
+                        <%= user.username %>
+                    </td>
+                    <td>
+                        <select class="department-dropdown" name="department">
+                            <option value="" disabled selected>Select a department</option>
+                            <option value="Top Board">Top Board</option>
+                            <option value="Video Production Team">Video Production Team</option>
+                            <option value="Social Media Handling Department">Social Media Handling Department
+                            </option>
+                            <option value="Content Section">Content Section</option>
+                            <option value="Content Writers">Content Writers</option>
+                            <option value="Creative Graphic & Animation Team">Creative Graphic & Animation Team
+                            </option>
+                            <option value="Event Organizing Team">Event Organizing Team</option>
+                            <option value="Technical Team">Technical Team</option>
+                        </select>
+
+                        <select class="team-dropdown" name="team">
+                            <option value="" disabled selected>Select a team member role</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="save">
+                            Save
+                        </button>
+                        <button class="remove">
+                            remove
+                        </button>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+    <br><br>
+
+    <script>
+        function searchTable() {
+            const input = document.getElementById('searchInput2').value.toLowerCase();
+            const rows = Array.from(document.querySelectorAll('#withdrawalTable2 tr'));
+            const tableBody = document.getElementById('withdrawalTable2');
+
+            // Separate matching and non-matching rows
+            const matchingRows = [];
+            const nonMatchingRows = [];
+
+            rows.forEach(row => {
+                const textContent = row.textContent.toLowerCase();
+                if (textContent.includes(input) && input.trim() !== '') {
+                    matchingRows.push(row);
+                    row.style.backgroundColor = 'yellow'; // Highlight matching row
+                } else {
+                    nonMatchingRows.push(row);
+                    row.style.backgroundColor = ''; // Reset background color
+                }
+            });
+
+            // Clear table body and re-append rows
+            tableBody.innerHTML = '';
+            matchingRows.forEach(row => tableBody.appendChild(row)); // Add matching rows on top
+            nonMatchingRows.forEach(row => tableBody.appendChild(row)); // Add non-matching rows below
+        }
+
+    </script>
+
+
+
+
+
+    <script>
+        const departmentTeamMap = {
+            "Top Board": [
+                "President",
+                "Vice President",
+                "Secretary",
+                "Assistant Secretary",
+                "Treasurer",
+                "Assistant Treasurer"
+            ],
+            "Video Production Team": [
+                "Presenter",
+                "Videographer",
+                "Video Editor",
+                "Script Writers"
+            ],
+            "Social Media Handling Department": [
+                "Director of Social Media Handling",
+                "Assistant Director of Social Media Handling"
+            ],
+            "Content Section": [
+                "Editor",
+                "Assistant Editor"
+            ],
+            "Content Writers": [
+                "Head",
+                "Content Writers"
+            ],
+            "Creative Graphic & Animation Team": [
+                "Head of Creative Animation",
+                "Graphic Designers"
+            ],
+            "Event Organizing Team": [
+                "Event Director",
+                "Assistant Event Director",
+                "Event Organizing Team Members"
+            ],
+            "Technical Team": [
+                "Head Team Members",
+                "Assistant Team Members"
+            ]
+        };
+
+        // Add event listeners dynamically for all rows
+        document.querySelectorAll(".department-dropdown").forEach((dropdown) => {
+            dropdown.addEventListener("change", function () {
+                const department = this.value;
+                const row = this.closest("tr");
+                const teamDropdown = row.querySelector(".team-dropdown");
+
+                // Clear previous team options
+                teamDropdown.innerHTML = '<option value="" disabled selected>Select a team member role</option>';
+
+                if (department && departmentTeamMap[department]) {
+                    departmentTeamMap[department].forEach(team => {
+                        const option = document.createElement("option");
+                        option.value = team.toLowerCase().replace(/\s+/g, '-');
+                        option.textContent = team;
+                        teamDropdown.appendChild(option);
+                    });
+                }
+            });
+        });
+    </script>
+    <script>
+
+        document.querySelectorAll(".save, .remove").forEach(button => {
+            button.addEventListener("click", async function (event) {
+                const row = event.target.closest("tr");
+                const department = row.querySelector("select[name='department']").value;
+                const role = row.querySelector("select[name='team']").value;
+                const id = row.querySelector(".id").textContent.trim();
+                const elementrole = row.querySelector(".role");
+                const type = event.target.classList.value
+                const url = "/account/communityMember"
+                if (department && role && id) {
+                    try {
+                        const response = await fetch(url, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ department, role, id, type })
+                        });
+
+                        const result = await response.json();
+
+                        if (response.ok && !result.error) {
+                            alert("ok")
+                            if (event.target.classList.value == "save") {
+                                let html = `<span>${result.department} -> ${result.role}</span><br>`;
+                                console.log(result, html)
+                                elementrole.insertAdjacentHTML('beforeend', html);
+                            } else {
+                                const spans = elementrole.querySelectorAll("span");
+                                spans.forEach(span => {
+                                    const tm = span.querySelector(".tm");
+                                    if (tm && tm.textContent.trim() === result.department) {
+                                        span.remove();
+                                    }
+                                });
+                            }
+
+                        } else {
+                            alert(result.error)
+                        }
+                    } catch (error) {
+                        alert('Error fetching data:', error)
+
+                    }
+                } else {
+                    alert('All fields(department, role, id) must be selected.')
+                    
+                }
+
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+    <script>
+        const errorMsg = document.querySelector('.e_flassmsg');
+        const seggMsg = document.querySelector('.s_flassmsg');
+        document.getElementById("userStatus").addEventListener("change", async (event) => {
+            const role = event.target.value;
+            await getdata("role", role);
+        });
+
+        document.getElementById("ser").addEventListener("input", async (event) => {
+            const nameOrEmail = event.target.value;
+
+            await getdata("nameOremail", nameOrEmail);
+        });
+
+        async function getdata(type, value) {
+            try {
+                const response = await fetch("/account/promotion", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ type: type, value: value }),
+                });
+
+                if (!response.ok) {
+                    throw new Error("Network response was not ok: " + response.statusText);
+                }
+
+                const result = await response.json();
+                
+                let withdrawalTable = document.querySelector('#withdrawalTable');
+                withdrawalTable.innerHTML = "";
+
+                if (result.length === 0) {
+                    let tr = document.createElement('tr');
+                    let td = document.createElement('td');
+                    td.colSpan = 4;
+                    td.innerText = "No records found";
+                    tr.appendChild(td);
+                    withdrawalTable.appendChild(tr);
+                } else {
+                    result.forEach(user => {
+                        let tr = document.createElement('tr');
+                        tr.setAttribute('data-id', user._id);
+                        tr.innerHTML = `
+                        <td><p class="id">${user._id}</p>${user.name}</td>
+                        <td class="role">${user.role}</td>
+                        <td>${user.username}</td>
+                        <td>
+                             <select name="action" class="userStatus">
+            <option value="Verified" ${user.role === 'Verified' ? 'selected' : ''}>Verified</option>
+            <option value="Unverified" ${user.role === 'Unverified' ? 'selected' : ''}>Unverified</option>
+            <option value="communityMember" ${user.role === 'promotetoboardmember' ? 'selected' : ''}>Promote to Board Member</option>
+            <option value="Verified" ${user.role === 'demotedboardmember' ? 'selected' : ''}>Demote Board Member</option>
+            <option value="deletedaccount" ${user.role === 'deletedaccount' ? 'selected' : ''}>Delete Account</option>
+        </select>
+                        </td>
+                    `;
+                        withdrawalTable.appendChild(tr);
+                    });
+                    attachUserStatusListeners();
+                }
+            } catch (error) {
+
+            }
+        }
+
+
+        function attachUserStatusListeners() {
+            const userStatusElements = document.querySelectorAll(".userStatus");
+
+            userStatusElements.forEach(select => {
+                select.addEventListener("change", async (e) => {
+                    const selectedValue = e.target.value;
+                    const userId = e.target.closest('tr').getAttribute('data-id');
+
+                    if (selectedValue === "deletedaccount") {
+                        const userConfirmed = confirm("Are you sure you want to delete your account? This action cannot be undone.");
+                        if (!userConfirmed) {
+                            e.target.value = '';
+                            return;
+                        }
+                        e.target.closest('tr').remove();
+                    }
+
+                    try {
+                        const response = await fetch('/account/promotion', {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ action: selectedValue, userId: userId })
+                        });
+
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            showMessage(seggMsg, result.message);
+                            if (selectedValue !== "deletedaccount") {
+                                e.target.closest('tr').querySelector(".role").innerText = result.role;
+                            }
+                        } else {
+                            const errorMessage = response.status === 401 ? result.message : response.statusText;
+                            showMessage(errorMsg, errorMessage);
+                        }
+
+                    } catch (error) {
+                        showMessage(errorMsg, "An error occurred while updating user status.");
+                    }
+                });
+            });
+        }
+
+        attachUserStatusListeners();
+
+        async function petPromotion(type) {
+            const url = type ? `/account/communityMember/${type}` : "/account/communityMember";
+
+            try {
+                const response = await fetch(url, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                return await response.json();;
+
+            } catch (error) {
+                console.error("Fetch error:", error);
+            }
+        }
+
+
+
+        function showMessage(element, message) {
+            element.innerText = message;
+            element.style.display = 'block';
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+    </script>

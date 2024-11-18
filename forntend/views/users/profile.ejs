@@ -1,0 +1,239 @@
+<% layout("/layouts/boilerplates.ejs") %>
+<!-- HEADER-SECTION -->
+<div class="home-header-section">
+    <header class="header home-header-section">
+        <div class="main-header">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light p-0">
+                    <a class="navbar-brand pt-0" href="/listings"><img src="/images/redlight-logo.png" alt=""
+                            class="logo" /></a>
+                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav">
+                            <li class="nav-item ">
+                                <a class="nav-link text-decoration-none navbar-text-color home-margin-top"
+                                    href="/listings">Home</a>
+                            </li>
+                            <!-- <span class="sr-only">(current)</span> -->
+                            <li class="nav-item">
+                                <a class="nav-link text-decoration-none navbar-text-color" href="/und">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-decoration-none navbar-text-color" href="/und">Services</a>
+                            </li>
+
+                            <li class="nav-item dropdown redlight-dropdown ">
+                                <a class="nav-link dropdown-toggle " href="/und" id="navbarDropdown2" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blogs</a>
+                                <div class="dropdown-menu dropdown-content-redlight blogs-section-drop-down">
+                                    <ul class="list-unstyled">
+                                        <li class="nav-item"> <a class="dropdown-item fierce-menu nav-link"
+                                                href="/und">Events</a></li>
+                                        <li class="nav-item"> <a class="dropdown-item fierce-menu nav-link"
+                                                href="/und">Up
+                                                coming Events</a></li>
+                                        <li class="nav-item"> <a class="dropdown-item fierce-menu nav-link"
+                                                href="/und">Blogs</a></li>
+                                        <li class="nav-item"> <a class="dropdown-item fierce-menu nav-link"
+                                                href="/und">Projects</a></li>
+                                        <li class="nav-item"> <a class="dropdown-item fierce-menu nav-link"
+                                                href="/und">Notice</a></li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item navbar-text-color "><a
+                                    class="nav-link text-decoration-none contact-us-margin navbar-text-color"
+                                    href="/und">Courses</a></li>
+                            <li class="nav-item navbar-text-color "><a
+                                    class="nav-link text-decoration-none contact-us-margin navbar-text-color"
+                                    href="/und">Meetings</a></li>
+                        </ul>
+                        <hr>
+
+                        <ul class="navbar-nav ">
+                            <li class="nav-item dropdown redlight-dropdown">
+                                <a class="nav-link dropdown-toggle " href="/profile" id="navbarDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
+
+                                <div class="dropdown-menu dropdown-content-redlight">
+                                    <ul class="list-unstyled">
+                                        <% if(!curUser){%>
+                                            <li class="nav-item"> <a class="dropdown-item nav-link"
+                                                    href="/login">Login</a>
+                                            </li>
+                                            <li class="nav-item"> <a class="dropdown-item nav-link" href="/signup">Sing
+                                                    Up</a></li>
+                                            <% } if(curUser){%>
+                                                <li class="nav-item"> <a class="dropdown-item nav-link"
+                                                        href="/profile">Profile</a></li>
+                                                <li class="nav-item"> <a class="dropdown-item nav-link"
+                                                        href="/logout">Log
+                                                        out</a></li>
+                                                <% }%>
+
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+
+</div>
+<style>
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+    }
+</style>
+
+<div class="row mt-3">
+    <div class="col-6 offset-3">
+
+        <h1>Profile</h1>
+
+        <div class="profile-container" onclick="document.getElementById('fileInput').click()">
+            <img class="profile" id="imagePreview" src="<%= user.userInfo.img.url %>" alt="Profile Image"
+                style="width: 150px; height: 150px; border-radius: 50%;">
+            <div class="camera-icon-overlay">
+                <i class="fa-solid fa-camera"></i>
+            </div>
+        </div>
+
+<form class="profileImgupdate" id="profileForm" action="/profile/edit" method="post" enctype="multipart/form-data">
+    <input name="profileImg" type="file" class="fileInput" id="fileInput" onchange="previewAndSubmit(event)"
+        style="display: none;">
+</form>
+
+<p>
+    <%= user.name %> <br>
+        <%= user.username %>
+</p>
+
+<% if(user.userInfo) { %>
+    <%= user.userInfo.firstName + " " + user.userInfo.firstName %> <br>
+        <%= user.userInfo.cybersecurityInterests %> <br>
+            <%= user.userInfo.faculty %><br>
+                <%= user.userInfo.phoneNumber %><br>
+                    <%= user.userInfo.studentID %><br>
+                        <%= user.userInfo.whatsappNumber %><br>
+                            <%= user.userInfo.yearOfStudy %><br>
+                                <% } %>
+
+                                    <a href="/profile/edit">edit</a>
+                                    <div class="loader"></div>
+                                    <div class="e_flassmsg" style="display: none; color: red;"></div>
+                                    <div class="s_flassmsg" style="display: none; color: green;"></div>
+                                    </div>
+                                    </div>
+
+                                    <script>
+                                        async function previewAndSubmit(event) {
+                                            const fileInput = event.target;
+                                            const file = fileInput.files[0];
+                                            const preview = document.getElementById('imagePreview');
+                                            const loadingSpinner = document.querySelector('.loader');
+                                            const errorMsg = document.querySelector('.e_flassmsg');
+                                            const seggMsg = document.querySelector('.s_flassmsg');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            const formData = new FormData();
+            formData.append('profileImg', file);
+
+            try {
+                const response = await fetch(document.getElementById('profileForm').action, {
+                    method: 'put',
+                    body: formData
+                });
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage(seggMsg, result.message);
+
+                } else {
+                    showMessage(errorMsg, result.message);
+                }
+            } catch (error) {
+                showMessage(errorMsg, "An error occurred. Please try again.");
+            } finally {
+                loadingSpinner.style.display = 'none';
+            }
+        }
+    }
+
+        function showMessage(element, message) {
+            element.innerText = message;
+            element.style.display = 'block';
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+
+
+
+
+
+</script>
+<script>
+    // Get the current page path
+    const currentPath = window.location.pathname;
+  
+    const pathname = {
+        '/profile/edit': 'editprofile',
+        '/listings': 'Home',
+        '/login': 'Login',
+        '/profile': 'Profile',
+        '/signup': 'Signup',
+        '/account': 'Account',
+        '/signup': 'Signup',
+        '/signup': 'Signup',
+
+    };
+    // document.querySelectorAll('.nav-item').forEach(item => {
+    //     item.classList.remove('active');
+    // });
+    if (pathname[currentPath]) {
+        document.querySelector('.title').innerText = pathname[currentPath];
+
+    }
+    let navItem
+    if (currentPath == "/listings" || currentPath == "/account/promotion" || currentPath == "/account" || currentPath == "/profile") {
+        navItem = document.querySelector(`.nav-item a[href="${currentPath}"]`).parentElement
+    } else {
+        navItem = document.querySelector(`.nav-item a[href="${currentPath}"]`).parentElement.parentElement.parentElement.parentElement
+    }
+
+    if (navItem) {
+        navItem.classList.add('active');
+    }
+
+
+</script>
+
+</html>

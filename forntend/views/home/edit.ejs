@@ -1,0 +1,47 @@
+<% layout("/layouts/boilerplates.ejs") %>
+
+    <body>
+        <h2 class="edith2" >Edit your post</h2>
+        <div class="row row-cols-lg-2 row-cols-md-1 row-cols-sm-1 Edit ">
+            
+        <form action="/listings/<%= list._id %>?_method=put" novalidate class="needs-validation" method="post" enctype="multipart/form-data">
+
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Title</label>
+                <input type="text" name="listing[title]" value="<%= list.title %>"  class="form-control" required
+                    id="exampleInputEmail1">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Description</label>
+                <textarea name="listing[description]" rows="5" required class="form-control"
+                    id="exampleInputEmail1"><%= list.description %></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Price</label>
+                <input type="number" name="listing[price]" value=<%=list.price %> class="form-control" required
+                id="exampleInputEmail1">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Location</label>
+                <input type="text" name="listing[location]" value="<%= list.location %>" class="form-control" required
+                    id="exampleInputEmail1">
+            </div>
+            <div>
+                <img src="<%= list.image.url%>" class="card-img-top img" alt="img" style="height: 10rem; width: 12rem;">
+        
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Upload new Image</label>
+                <input type="file" name="listing[image]"class="form-control" 
+                    id="exampleInputEmail1">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Country</label>
+                <input type="text" name="listing[country]" value="<%= list.country %>" class="form-control" required
+                    id="exampleInputEmail1">
+            </div>
+
+            <button class="btn btn-primary" style="margin-bottom: 3rem;" > <b>Submit</b></button>
+        </form>
+</div>
+    </body>
